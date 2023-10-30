@@ -1,0 +1,50 @@
+{% extends "users/base.html" %}
+{% block title %}
+    Signup
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <div class="card mt-5">
+        <div class="card-header">
+            <h3>Signup</h3>
+        </div>
+        <form method="post"> {% csrf_token %}
+            <div class="card-body">
+                <div class="mb-3 row">
+                    <label for="email" class="col-sm-2 col-form-label">Email</label>
+                    <div class="col-sm-10">
+                      <input name="email" type="email"  class="form-control" id="email" placeholder="Max@gmail.com">
+                    </div>
+                  </div>
+                <div class="mb-3 row">
+                    <label for="username" class="col-sm-2 col-form-label">Username</label>
+                    <div class="col-sm-10">
+                      <input name="username" type="text"  class="form-control" id="username" placeholder="username">
+                    </div>
+                  </div>
+                <div class="mb-3 row">
+                    <label for="first_name" class="col-sm-2 col-form-label">First_name</label>
+                    <div class="col-sm-10">
+                      <input name="first_name" type="text"  class="form-control" id="first_name" placeholder="first_name">
+                    </div>
+                  </div>
+                  <div class="mb-3 row">
+                    <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+                    <div class="col-sm-10">
+                      <input name="password1" type="password" class="form-control" id="inputPassword" placeholder="password">
+                    </div>
+                  </div>
+                  <div class="mb-3 row">
+                    <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+                    <div class="col-sm-10">
+                      <input name="password2" type="password" class="form-control" id="inputPassword" placeholder="password(again)">
+                    </div>
+                  </div>
+                  <button class="btn btn-primary" type="submit">Submit</button>
+                  <center><p>do you already have an account? <a href="{% url 'login' %}">Login</a></p></center>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

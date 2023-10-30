@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/css/dist/mdb5/standard/core.min.css">
+    <link rel='stylesheet' id='roboto-subset.css-css'  href='https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/css/mdb5/fonts/roboto-subset.css?ver=3.9.0-update.5' type='text/css' media='all' />
+
+    <title>Todo - {{request.user.username}}</title>
+  </head>
+  <body>
+
+    <section class="vh-100 gradient-custom">
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-xl-10">
+      
+              <div class="card">
+                <div class="card-body p-5">
+      
+                  <form method="post" action="{% url 'create' %}" class="d-flex justify-content-center align-items-center mb-4">
+                    {% csrf_token %}
+                    <div class="form-outline flex-fill">
+                      <input  type="text" id="form2" class="form-control" />
+                      <label class="form-label" for="form2">New task...</label>
+                      
+                    </div>
+                    <div style="border: 1px solid;border-radius: 7px; margin-left: 4px;" class="form-outline flex-fill">
+                      <select  id="form3" name="category" required class="form-control">
+                        {% for category in categories %}
+                          <option value="{{category.id}}">{{category.name}}</option>
+                        {% endfor %}
+                      </select>
+                      <label class="form-label" for="form2">Category</label>
+                    </div>
+                    <button type="submit" class="btn btn-info ms-2">Add</button>
+                  </form>
+      
+                  <!-- Tabs navs -->
+                  <ul class="nav nav-tabs mb-4 pb-2" id="ex1" role="tablist">
+                    {% for category in categories %}
+                      <li class="nav-item" role="presentation">
+                        <a class="nav-link {% if forloop.counter == 1 %} active {% endif %} " id="ex1-tab-{{category.id}}" data-mdb-toggle="tab" href="#ex1-tabs-{{category.id}}" role="tab"
+                          aria-controls="ex1-tabs-{{category.id}}"  aria-selected="true">{{category.name}}</a>
+                      </li> 
+                    {% endfor %}
+                  </ul>
+                  <!-- Tabs navs -->
+      
+                  <!-- Tabs content -->
+                  <div class="tab-content" id="ex1-content">
+                    <div class="tab-pane fade show active" id="ex1-tabs-1" role="tabpanel"
+                      aria-labelledby="ex1-tab-1">
+                    </div>
+                    {% for category in categories %}
+                    
+                    <div class="tab-pane fade {% if forloop.counter == 1 %} active show {% endif %}  " id="ex1-tabs-{{category.id}}" role="tabpanel" aria-labelledby="ex1-tab-{{category.id}}">
+                      
+                      <ul class="list-group mb-0">
+                        {% for todo in category.todo_set.all %}
+                        <li class="list-group-item d-flex align-items-center border-0 mb-2 rounded"
+                        style="background-color: #f4f6f7;">
+                        {% if todo.done %}
+                        <span class="btn badge rounded-pill bg-success m-1"><i class="fa-solid fa-check-double"></i></span>
+                        {% else %}
+                        <form action="{% url 'action' todo.id 'done' %}" method="post"></form>{% csrf_token %} <button class="btn badge rounded-pill bg-success m-1" type="submit m-2"><i class="fa-solid fa-check"></i></button>
+                        {% endif %}
+                        <form action="{% url 'action' todo.id 'delete' %}" method="post"></form>{% csrf_token %} <button class="btn badge rounded-pill bg-danger m-1" type="submit m-2"><i class="fa-solid fa-trash"></i></button>
+                        
+                          <!-- <input class="form-check-input" type="checkbox" value="" aria-label="..." {% if todo.done %} checked  {% endif %} /> -->
+                        {{todo.body}}  <span style="font-size: 12px;" class="text-muted">{{todo.datetime}}</span>
+                        </li>
+                        {% endfor %} 
+                        
+                      </ul>
+                      
+                    </div>
+                    {% endfor %}
+                  </div>
+                  <!-- Tabs content -->
+      
+                </div>
+              </div>
+      
+            </div>
+          </div>
+        </div>
+      </section>
+     
+    <script type="text/javascript" src="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/js/dist/mdb5/standard/core.min.js"></script>
+
+    <script type="text/javascript" src="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/js/dist/search/search.min.js"></script>
+    <script src="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/js/dist/main.min.js"></script>
+  </body>
+</html>
+
+
+
+
+<!-- 16:00 -->
